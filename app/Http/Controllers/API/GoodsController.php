@@ -9,11 +9,10 @@ use App\Http\Controllers\API\BaseController;
 
 class GoodsController extends BaseController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Good::limit(10)
-                    ->get()
-        ;
+        $paginationParams = $request->all();
+        $data = Good::paginate($paginationParams['per_page']);
 
         return $this->sendResponse($data->toArray(), 'ok');
     }
