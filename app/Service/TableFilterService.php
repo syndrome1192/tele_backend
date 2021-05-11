@@ -12,15 +12,15 @@ class TableFilterService
     {
         $query = [];
 
-        foreach ($filter as $k => $v) {
-            if (gettype($filter[$k]) === "array") {
+        foreach ($filter["data"] as $k => $v) {
+            if (gettype($filter["data"][$k]) === "array") {
                 $query[] = $v;
             } else {
                 $query[] = [$k, 'like', '%'.$v.'%'];
             }
         }
         $filteredData = Good::where($query)
-                            ->get()
+                            ->paginate($filter["per_page"])
         ;
 
         return $filteredData->toArray();

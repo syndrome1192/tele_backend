@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Good;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -177,6 +178,11 @@ class GoodsSeeder extends Seeder
                 'product_condition' => 'Б/У',
             ],
         ];
-        DB::table('goods')->insert($data);
+
+        foreach ($data as $row) {
+            $inventory = new Good;
+            $inventory->fill($row);
+            $inventory->save();
+        }
     }
 }
